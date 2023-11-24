@@ -22,4 +22,4 @@ LeapMotion을 사용하여 핸드제스처 기반의 플레이를 특징으로 �
 ## Required Tools 
 1. LeapMotion
 2. unity 2021.3.21f1
-3. Two Monitor
+3. Two Monitors
