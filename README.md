@@ -50,3 +50,32 @@ git clone --branch main https://github.com/ReYoungSung/Last_Symphony.git
 - Leap Motion에서 손이 인식되는지 확인한 뒤 Unity의 손 추적 입력을 확인합니다.
 - `MultiDisplay.cs`는 연결된 보조 디스플레이를 활성화합니다. 실제 전시는 모니터 연결과 씬 카메라의 출력 대상 설정을 함께 확인합니다.
 - `SceneChanger.cs`에는 `LoadingScene`으로 이동하는 코드가 있습니다. 이 동작을 사용할 때는 대상 씬의 존재와 빌드 등록 상태를 확인해야 합니다.
+
+## 사용법
+
+### 체험 준비
+
+1. Leap Motion을 연결하고 장치 소프트웨어에서 양손 추적을 확인합니다.
+2. 모니터 2대를 사용하는 경우 운영체제의 확장 화면 설정과 Unity 카메라의 출력 디스플레이를 확인합니다.
+3. 체험할 씬을 열고 Play를 실행합니다. 손을 센서 인식 범위 안에 두고 화면의 제스처 안내를 따라갑니다.
+4. 각 악기의 안내가 표시되는 시간에 해당 동작을 수행합니다. 성공하면 Clear 표시와 함께 해당 악기의 음량·시각 효과가 바뀝니다.
+
+### 손동작
+
+아래는 `HandMotionManager`가 연결된 씬의 판정 기준입니다. 손바닥의 목표 방향과 높이 기준은 씬의 검출기 설정을 따릅니다.
+
+| 구간 | 조작 |
+| --- | --- |
+| 시작·피아노 | 양손의 핀치(엄지·검지 집기)를 유지하며 손을 들어 시작 |
+| 첼로 | 양손에서 검지만 펴고 원을 그리는 동작 |
+| 팀파니 | 양손을 주먹으로 쥐고 위아래로 흔들기 |
+| 바이올린 | 왼손 손바닥을 안내 방향에 맞추고 오른손 핀치를 유지하며 좌우로 흔들기 |
+| 차임벨·심벌즈 | 양손의 손가락을 모두 펴고 화면 안내 자세를 유지해 게이지 채우기 |
+
+제스처가 인식되지 않으면 손가락이 가려지지 않는지, 양손이 모두 추적되는지, 해당 악기의 안내 구간인지 확인합니다. 손바닥 방향은 임의로 고정하지 말고 화면 안내와 씬의 Palm Direction Detector 설정을 대조합니다.
+
+### 종료와 알려진 전환 제약
+
+Editor에서는 Play를 끄면 체험을 종료합니다. 현재 빌드 씬 목록은 비어 있으며, 메뉴 코드에는 `LoadingScene`과 `ConductingScene` 참조가 있습니다. 실제 체험 씬을 정하고 해당 이름·메뉴 연결·빌드 등록을 맞추기 전에는 메뉴부터 끝까지 이어지는 실행을 전제로 하지 않습니다.
+
+동작 기준: [HandMotionManager.cs](GameProjectFile/Assets/Scripts/HandMotionManager.cs) · [HandGestureTracking.cs](GameProjectFile/Assets/Scripts/HandGestureTracking.cs)
